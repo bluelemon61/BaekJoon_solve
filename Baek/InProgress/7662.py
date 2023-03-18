@@ -13,22 +13,33 @@ def insertToMin(n):
         tree_dict[n] = 1
     
     index = len(min_tree)
+    min_tree.append(n)
+    
+    parent = -1
     while(index != 1):
-        parent = index % 2
-        min_tree.append(n)
-        if min_tree[parent] < n:
+        parent = index // 2
+        if min_tree[parent] <= n:
             break
         min_tree[parent], min_tree[index] = (min_tree[index], min_tree[parent])
         index = parent
     return index
 
 def delInMin():
+    if len(min_tree) == 1:
+        return 'outoflength'
     result = min_tree[1]
     if tree_dict[result] == 0:
-        return False
+        result =  'none'
+        if len(min_tree) == 2:
+            min_tree.pop()
+            return result
+        min_tree[1] = min_tree.pop()
     else:
         tree_dict[result] -= 1
-    min_tree[1] = min_tree.pop()
+        if len(min_tree) == 2:
+            return min_tree.pop()
+        else:
+            min_tree[1] = min_tree.pop()
     index = 1
 
     while(True):
@@ -51,28 +62,34 @@ def delInMin():
     return result
 
 def insertToMax(n):
-    if n in tree_dict:
-        tree_dict[n] += 1
-    else:
-        tree_dict[n] = 1
-    
     index = len(max_tree)
+    max_tree.append(n)
+    
+    parent = -1
     while(index != 1):
-        parent = index % 2
-        max_tree.append(n)
-        if max_tree[parent] > n:
+        parent = index // 2
+        if max_tree[parent] >= n:
             break
         max_tree[parent], max_tree[index] = (max_tree[index], max_tree[parent])
         index = parent
     return index
 
 def delInMax():
+    if len(max_tree) == 1:
+        return 'outoflength'
     result = max_tree[1]
     if tree_dict[result] == 0:
-        return False
+        result = 'none'
+        if len(max_tree) == 2:
+            max_tree.pop()
+            return result
+        max_tree[1] = max_tree.pop()
     else:
         tree_dict[result] -= 1
-    max_tree[1] = max_tree.pop()
+        if len(max_tree) == 2:
+            return max_tree.pop()
+        else:
+            max_tree[1] = max_tree.pop()
     index = 1
 
     while(True):
@@ -104,13 +121,24 @@ def delete(n):
     else:
         result = delInMin()
     
-    if not result:
+    if result == 'none':
         return delete(n)
+    return result
 
 IOrD = {
     'I': insert,
     'D': delete
 }
+
+def destination():
+    max_value = delete(1)
+    min_value = delete(-1)
+    if min_value == 'outoflength':
+        min_value = max_value
+    if max_value == 'outoflength':
+        print('EMPTY')
+    else:
+        print(f'{max_value} {min_value}')
 
 for t_ in range(t):
     k = int(sys.stdin.readline())
@@ -121,5 +149,7 @@ for t_ in range(t):
     max_tree.append(0)
     for k_ in range(k):
         input_set = sys.stdin.readline().split()
-        IOrD[input_set[0]](input_set[1])
-            
+        IOrD[input_set[0]](int(input_set[1]))
+        print(f'{k_+1}/{k}\nMin Tree: {min_tree}\nMax Tree: {max_tree}\nDict: {tree_dict}')
+    destination()
+    
