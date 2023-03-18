@@ -1,4 +1,5 @@
 import sys
+sys.setrecursionlimit(10**6)
 
 t = int(sys.stdin.readline())
 
@@ -150,6 +151,6 @@ for t_ in range(t):
     for k_ in range(k):
         input_set = sys.stdin.readline().split()
         IOrD[input_set[0]](int(input_set[1]))
-        print(f'{k_+1}/{k}\nMin Tree: {min_tree}\nMax Tree: {max_tree}\nDict: {tree_dict}')
+        #print(f'{k_+1}/{k}\nMin Tree: {min_tree}\nMax Tree: {max_tree}\nDict: {tree_dict}')
     destination()
     
