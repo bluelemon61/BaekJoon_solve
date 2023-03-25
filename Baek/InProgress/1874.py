@@ -1,7 +1,9 @@
-n = int(input())
+import sys
+
+n = int(sys.stdin.readline())
 sequence = []
 for i in range(n):
-    sequence.append(int(input()))
+    sequence.append(int(sys.stdin.readline()))
 
 def posibility(sequence):
     high = 0
