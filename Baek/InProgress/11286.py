@@ -12,7 +12,7 @@ def push_heap(heap, num):
         child = parent
         parent = child//2
         
-        if heap[parent] < num:
+        if abs(heap[parent]) > abs(num):
             heap[child] = heap[parent]
         else:
             break
@@ -32,9 +32,9 @@ def pop_heap(heap):
         child = parent*2
 
         if (child+1 < len(heap)):
-            if (heap[child] < heap[child+1]):
+            if (abs(heap[child]) > abs(heap[child+1])):
                 child += 1
-        if (heap[parent] > heap[child]):
+        if (abs(heap[parent]) < abs(heap[child])):
             break
         heap[parent], heap[child] = heap[child], heap[parent]
         
